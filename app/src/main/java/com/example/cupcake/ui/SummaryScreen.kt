@@ -54,8 +54,61 @@ fun OrderSummaryScreen(
     val items = listOf(                 /** Luodaan tilauksen yhteenvetojen lista näyttämistä varten */
         Pair(stringResource(R.string.quantity), numberOfCupcakes),      /** Yhteenveto rivi 1: näyttää valitun määrän */
         Pair(stringResource(R.string.colour), orderUiState.colour),     /** Yhteenveto rivi 2: näyttää valitun värin */
-        Pair(stringResource(R.string.colour2), orderUiState.colour2)        /** Yhteenveto rivi 3: näyttää toisen valitun värin */
+        Pair(stringResource(R.string.colour2), orderUiState.colours)        /** Yhteenveto rivi 3: näyttää toisen valitun värin */
     )
+
+    fun <T> List<T>.permutations(): Sequence<List<T>> = sequence {
+        if (isEmpty()) {
+            yield(emptyList())
+            return@sequence
+        }
+        for (i in indices) {
+            val element = this@permutations[i]
+            val otherElements = this@permutations.subList(0, i) + this@permutations.subList(i + 1, size)
+            for (perm in otherElements.permutations()) {
+                yield(listOf(element) + perm)
+            }
+        }
+    }
+
+    fun <T> List<T>.permutations2(): List<List<T>> {
+        val used = BooleanArray(size)
+        val result = mutableListOf<List<T>>()
+
+        fun dfs(path: MutableList<T>) {
+            if (path.size == size) {
+                result.add(path.toList())
+                return
+            }
+            for (i in indices) {
+                if (used[i] || (i > 0 && !used[i - 1] && this[i - 1] == this[i])) continue
+                used[i] = true
+                path.add(this[i])
+                dfs(path)
+                path.removeAt(path.size - 1)
+                used[i] = false
+            }
+        }
+
+        dfs(mutableListOf())
+        return result
+    }
+
+    fun <T> List<T>.permutations3(): List<List<T>> {
+        val result = mutableListOf<List<T>>()
+        for (outer in indices) {
+            val temp = mutableListOf<T>()
+            for (inner in indices) {
+                temp.add(this[(outer + inner) % size])
+            }
+            result.add(temp)
+        }
+        return result
+    }
+
+    fun uniquePermutations(list: List<*>): List<List<*>> {
+        return list.distinct().permutations3().toList()
+    }
 
     Column(
         modifier = modifier,
@@ -67,7 +120,17 @@ fun OrderSummaryScreen(
         ) {
             items.forEach { item ->             /** listan jokaiselle yhteenvedolle oma rivi */
                 Text(item.first.uppercase())    /** Tulostaa ensimmäisen elementin, yhteenvedon nimen isoin kirjaimin. */
-                Text(text = item.second, fontWeight = FontWeight.Bold)      /** Tulostaa toisen elementin, yhteenvedon arvon, lihavoituna. */
+                if (item.second is String) {
+                    Text(text = item.second as String, fontWeight = FontWeight.Bold)
+                } else if (item.second is List<*>) {
+                    Text(
+                        text = uniquePermutations((item.second as List<*>)
+                            .toTypedArray()
+                            .filterNotNull())
+                            .joinToString(", "),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
                 Divider(thickness = dimensionResource(R.dimen.thickness_divider))       /** Luo erotusviivan käyttäen määriteltyä paksuutta resurssista. */
             }
             /** Spacer-luokka luo tilan sijoittamiseen. Tässä asetetaan korkeus resurssista määritetyn pienen tyhjätilan korkeuden verran. */

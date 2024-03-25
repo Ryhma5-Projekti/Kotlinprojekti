@@ -20,6 +20,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -127,13 +129,14 @@ fun KotlinApp(
             composable(route = ProjectScreen.Screen2.name) {
                 val context = LocalContext.current
                 SelectOptionScreen(         /** SelectOptionScreen.kt */
+                    multiSelection = false,
                     subtotal = uiState.price,
                     onNextButtonClicked = { navController.navigate(ProjectScreen.Screen3.name) },   /** Seuraava näyttö */
                     onCancelButtonClicked = {           /** peruu tilauksen ja palaa alkuun */
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
                     /** Hakee värivaihtoehdot listasta id:n perusteella (DataSource.kt) ja asettaa ne options listaan */
-                    options = DataSource.colours.map { id -> context.resources.getString(id) },
+                    options = DataSource.colours.map { id -> context.resources.getString(id.first) },
                     onSelectionChanged = { viewModel.setColour(it) },   /** Asettaa valitun värin muuttujaan */
                     modifier = Modifier.fillMaxHeight()
                 )
@@ -142,15 +145,37 @@ fun KotlinApp(
             /** Näyttö 3 */
             composable(route = ProjectScreen.Screen3.name) {
                 val context = LocalContext.current
-                SelectOptionScreen(         /** SelectOptionScreen.kt */
+                val selectedColors = remember { mutableStateListOf<String>() }
+
+                SelectOptionScreen(
+                    multiSelection = true,
                     subtotal = uiState.price,
-                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen4.name) },   /** Seuraava näyttö */
-                    onCancelButtonClicked = {           /** peruu tilauksen ja palaa alkuun */
-                        cancelOrderAndNavigateToStart(viewModel, navController)
+                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen4.name) },
+                    onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
+                    options = DataSource.colours
+                        .filter { pair ->
+                            // Filter out colours that aren't under the selected colour
+                            context.resources.getString(pair.first) == viewModel.getColour()
+                        }
+                        .flatMap { pair ->
+                            // Retrieve the array resource ID from the pair
+                            val arrayResourceId = pair.second
+                            // Retrieve the array of strings using the resource ID
+                            val array = context.resources.getStringArray(arrayResourceId)
+                            // Convert the array into a list of strings
+                            array.toList()
+                        },
+                    onMultiSelectionChanged = { selectedColor ->
+                        if (selectedColors.contains(selectedColor.last())) {
+                            // If the color is already selected, remove it
+                            selectedColors.remove(selectedColor.last())
+                        } else {
+                            // Otherwise, add it to the list of selected colors
+                            selectedColor.last()?.let { it1 -> selectedColors.add(it1) }
+                        }
+                        // Pass the list of selected colors to your ViewModel or handle as needed
+                        viewModel.setColours(selectedColors)
                     },
-                    /** Hakee värivaihtoehdot listasta id:n perusteella (DataSource.kt) ja asettaa ne options listaan */
-                    options = DataSource.colours3.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setColour2(it) },   /** Asettaa valitun värin muuttujaan */
                     modifier = Modifier.fillMaxHeight()
                 )
             }

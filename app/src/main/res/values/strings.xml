@@ -6,16 +6,39 @@
     <string name="screen3">Näyttö 3</string>
     <string name="screen4">Näyttö 4</string>
 
-    // 1. värit
+    // värit
     <string name="colour">First selected colour</string>
-    <string name="green">Green</string>
-    <string name="yellow">Yellow</string>
-    <string name="red">Red</string>
-
-    // 2. värit
     <string name="colour2">Second colour</string>
-    <string name="purple">Purple</string>
-    <string name="blue">Blue</string>
+    <string name="blue_title">Sininen</string>
+    <string-array name="blue_colors">
+        <item>Taivaansininen</item>
+        <item>Petrooli</item>
+        <item>Turkoosi</item>
+        <item>Laventeli</item>
+        <item>Baby Blue</item>
+        <item>Siniharmaa</item>
+    </string-array>
+
+
+    <string name="red_title">Punainen</string>
+    <string-array name="red_colors">
+        <item>Taivaansininen</item>
+        <item>Petrooli</item>
+        <item>Turkoosi</item>
+        <item>Laventeli</item>
+        <item>Baby Blue</item>
+        <item>Siniharmaa</item>
+    </string-array>
+
+    <string name="green_title">Vihreä</string>
+    <string-array name="green_colors">
+        <item>Taivaansininen</item>
+        <item>Petrooli</item>
+        <item>Turkoosi</item>
+        <item>Laventeli</item>
+        <item>Baby Blue</item>
+        <item>Siniharmaa</item>
+    </string-array>
 
     // napit
     <string name="cancel">Cancel</string>

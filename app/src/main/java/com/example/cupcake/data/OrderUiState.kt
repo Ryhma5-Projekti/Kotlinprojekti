@@ -11,6 +11,7 @@ data class OrderUiState(
     val colour: String = "",
     /** Valittu päivämäärä */
     val colour2: String = "",
+    val colours: List<String?> = listOf(),
     /** Tilauksen kokonaiskustannus */
     val price: String = "",
     /** Mahdolliset päivämäärät*/

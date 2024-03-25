@@ -66,12 +66,29 @@ class OrderViewModel : ViewModel() {
         }
     }
 
+    fun getColour(): String {
+        return _uiState.value.colour
+    }
+
     fun setColour2(desiredColour: String) {
         _uiState.update { currentState ->
             currentState.copy(colour2 = desiredColour)   /** Asettaa halutun värivalinnan arvoon colour (OrderUiState.kt) */
         }
     }
 
+    fun getColour2():String {
+        return _uiState.value.colour2
+    }
+
+    fun setColours(desiredColours: List<String?>) {
+        _uiState.update { currentState->
+            currentState.copy(colours = desiredColours)
+        }
+    }
+
+    fun getColours(): List<String?> {
+        return _uiState.value.colours
+    }
 
      /** Asettaa [pickupDate] nykyiselle tilaukselle */
 
