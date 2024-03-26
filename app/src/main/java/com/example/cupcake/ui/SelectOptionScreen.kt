@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
@@ -14,7 +13,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -34,6 +32,7 @@ import com.example.cupcake.ui.components.FormattedPriceLabel
 @Composable
 /** Komponentti, joka luo valintanäytön */
 fun SelectOptionScreen(
+    modifier: Modifier = Modifier,                       /** Ulkoasun muokkaukseen käytettävä Modifier-objekti, oletuksena tyhjä */
     subtotal: String,                                   /** Tilauksen väliaikainen summa */
     options: List<String>,                              /** Lista vaihtoehdoista */
     onSelectionChanged: (String) -> Unit = {},          /** Toiminto valinnan muuttuessa, oletuksena tyhjä */
@@ -41,7 +40,6 @@ fun SelectOptionScreen(
     onCancelButtonClicked: () -> Unit = {},             /** Toiminto peruuta-painikkeen klikkaukselle, oletuksena tyhjä */
     onNextButtonClicked: () -> Unit = {},               /** Toiminto seuraava-painikkeen klikkaukselle, oletuksena tyhjä */
     multiSelection: Boolean = false,
-    modifier: Modifier = Modifier                       /** Ulkoasun muokkaukseen käytettävä Modifier-objekti, oletuksena tyhjä */
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }    /** Tilan säilyttäminen valitulle arvolle */
     var selectedValues by rememberSaveable { mutableStateOf(setOf<String?>()) }
@@ -67,11 +65,7 @@ fun SelectOptionScreen(
                                     } else {
                                         remove(item)
                                     }
-                                    if(isEmpty()) {
-                                        setOf(null)
-                                    } else {
-                                        toSet()
-                                    }
+                                    toSet()
                                 }
                                 onMultiSelectionChanged(selectedValues)
                             }

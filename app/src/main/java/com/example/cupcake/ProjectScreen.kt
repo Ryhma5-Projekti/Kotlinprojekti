@@ -20,8 +20,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -105,7 +103,8 @@ fun KotlinApp(
             startDestination = ProjectScreen.Screen1.name,    /** määritellään aloitusruutu */
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())  /** sovellusta voi scrollata */
+                .verticalScroll(rememberScrollState())
+                /** sovellusta voi scrollata */
                 .padding(innerPadding)
         ) {
             /** Aloitusnäyttö */
@@ -145,8 +144,6 @@ fun KotlinApp(
             /** Näyttö 3 */
             composable(route = ProjectScreen.Screen3.name) {
                 val context = LocalContext.current
-                val selectedColors = remember { mutableStateListOf<String>() }
-
                 SelectOptionScreen(
                     multiSelection = true,
                     subtotal = uiState.price,
@@ -166,15 +163,7 @@ fun KotlinApp(
                             array.toList()
                         },
                     onMultiSelectionChanged = { selectedColor ->
-                        if (selectedColors.contains(selectedColor.last())) {
-                            // If the color is already selected, remove it
-                            selectedColors.remove(selectedColor.last())
-                        } else {
-                            // Otherwise, add it to the list of selected colors
-                            selectedColor.last()?.let { it1 -> selectedColors.add(it1) }
-                        }
-                        // Pass the list of selected colors to your ViewModel or handle as needed
-                        viewModel.setColours(selectedColors)
+                        viewModel.setColours(selectedColor.filterNotNull())
                     },
                     modifier = Modifier.fillMaxHeight()
                 )
