@@ -6,7 +6,7 @@ object DataSource {
     val colours = listOf(
         Pair(R.string.blue_title, R.array.blue_colors),
         Pair(R.string.red_title, R.array.red_colors),
-        Pair(R.string.green_title, R.array.green_colors),
+        Pair(R.string.yellow_title, R.array.yellow_colors),
     )
 
     val colours2 = listOf(

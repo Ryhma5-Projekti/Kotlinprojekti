@@ -1,46 +1,39 @@
 
 <resources>
-    // appbar
+    <!-- appbar -->
     <string name="app_name">Kotlin-Sovellus</string>
     <string name="screen2">Näyttö 2</string>
     <string name="screen3">Näyttö 3</string>
     <string name="screen4">Näyttö 4</string>
 
-    // värit
+    <!-- värit -->
     <string name="colour">First selected colour</string>
     <string name="colour2">Second colour</string>
     <string name="blue_title">Sininen</string>
     <string-array name="blue_colors">
-        <item>Taivaansininen</item>
-        <item>Petrooli</item>
-        <item>Turkoosi</item>
-        <item>Laventeli</item>
-        <item>Baby Blue</item>
-        <item>Siniharmaa</item>
+        <item>ukkonen</item>
+        <item>taivas</item>
+        <item>minttu</item>
+        <item>meri</item>
     </string-array>
-
 
     <string name="red_title">Punainen</string>
     <string-array name="red_colors">
-        <item>Taivaansininen</item>
-        <item>Petrooli</item>
-        <item>Turkoosi</item>
-        <item>Laventeli</item>
-        <item>Baby Blue</item>
-        <item>Siniharmaa</item>
+        <item>sitruuna</item>
+        <item>mehiläisvaha</item>
+        <item>appelsiini</item>
+        <item>kerma</item>
     </string-array>
 
-    <string name="green_title">Vihreä</string>
-    <string-array name="green_colors">
-        <item>Taivaansininen</item>
-        <item>Petrooli</item>
-        <item>Turkoosi</item>
-        <item>Laventeli</item>
-        <item>Baby Blue</item>
-        <item>Siniharmaa</item>
+    <string name="yellow_title">Keltainen</string>
+    <string-array name="yellow_colors">
+        <item>granaattiomena</item>
+        <item>marsipaani</item>
+        <item>hertta</item>
+        <item>flamingo</item>
     </string-array>
 
-    // napit
+    <!-- napit -->
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="back_button">Back</string>

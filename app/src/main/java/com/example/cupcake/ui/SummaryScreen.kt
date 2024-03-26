@@ -1,5 +1,6 @@
 package com.example.cupcake.ui
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.cupcake.R
+import com.example.cupcake.data.ColorLibrary
 import com.example.cupcake.data.OrderUiState
 import com.example.cupcake.ui.components.FormattedPriceLabel
 
@@ -69,6 +71,14 @@ fun OrderSummaryScreen(
         return result
     }
 
+    fun <T> List<T>.convertToColors(): List<Color> {
+        val result = mutableListOf<Color?>()
+        for (item in this) {
+            result.add(ColorLibrary.colors[item as String])
+        }
+        return result.toList().filterNotNull()
+    }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
@@ -84,8 +94,9 @@ fun OrderSummaryScreen(
                 } else if (item.second is List<*>) {
                     Text(
                         text = (item.second as List<*>)
+                            .convertToColors()
                             .permutations()
-                            .joinToString(", "),
+                            .joinToString("\n\n"),
                         fontWeight = FontWeight.Bold
                     )
                 }
