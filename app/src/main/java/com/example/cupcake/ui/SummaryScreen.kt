@@ -57,44 +57,7 @@ fun OrderSummaryScreen(
         Pair(stringResource(R.string.colour2), orderUiState.colours)        /** Yhteenveto rivi 3: näyttää toisen valitun värin */
     )
 
-    fun <T> List<T>.permutations(): Sequence<List<T>> = sequence {
-        if (isEmpty()) {
-            yield(emptyList())
-            return@sequence
-        }
-        for (i in indices) {
-            val element = this@permutations[i]
-            val otherElements = this@permutations.subList(0, i) + this@permutations.subList(i + 1, size)
-            for (perm in otherElements.permutations()) {
-                yield(listOf(element) + perm)
-            }
-        }
-    }
-
-    fun <T> List<T>.permutations2(): List<List<T>> {
-        val used = BooleanArray(size)
-        val result = mutableListOf<List<T>>()
-
-        fun dfs(path: MutableList<T>) {
-            if (path.size == size) {
-                result.add(path.toList())
-                return
-            }
-            for (i in indices) {
-                if (used[i] || (i > 0 && !used[i - 1] && this[i - 1] == this[i])) continue
-                used[i] = true
-                path.add(this[i])
-                dfs(path)
-                path.removeAt(path.size - 1)
-                used[i] = false
-            }
-        }
-
-        dfs(mutableListOf())
-        return result
-    }
-
-    fun <T> List<T>.permutations3(): List<List<T>> {
+    fun <T> List<T>.permutations(): List<List<T>> {
         val result = mutableListOf<List<T>>()
         for (outer in indices) {
             val temp = mutableListOf<T>()
@@ -104,10 +67,6 @@ fun OrderSummaryScreen(
             result.add(temp)
         }
         return result
-    }
-
-    fun uniquePermutations(list: List<*>): List<List<*>> {
-        return list.distinct().permutations3().toList()
     }
 
     Column(
@@ -124,9 +83,8 @@ fun OrderSummaryScreen(
                     Text(text = item.second as String, fontWeight = FontWeight.Bold)
                 } else if (item.second is List<*>) {
                     Text(
-                        text = uniquePermutations((item.second as List<*>)
-                            .toTypedArray()
-                            .filterNotNull())
+                        text = (item.second as List<*>)
+                            .permutations()
                             .joinToString(", "),
                         fontWeight = FontWeight.Bold
                     )
