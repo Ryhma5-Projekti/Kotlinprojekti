@@ -44,7 +44,7 @@ fun StartOrderScreen(
 ) {
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))   /** Lisää tyhjää tilaa pystysuunnassa */
             Image(                                              /** näyttää kuvan cupcake */
-                painter = painterResource(R.drawable.cupcake),  /** (drawable/cupcake.xml) */
+                painter = painterResource(R.drawable.colormix_logo),  /** (drawable/cupcake.xml) */
                 contentDescription = null,                      /** jolla ei ole sisältökuvausta */
                 modifier = Modifier.width(300.dp)               /**  ja määrittelee leveyden */
             )

@@ -17,16 +17,16 @@
         <item>meri</item>
     </string-array>
 
-    <string name="red_title">Punainen</string>
-    <string-array name="red_colors">
+    <string name="yellow_title">Keltainen</string>
+    <string-array name="yellow_colors">
         <item>sitruuna</item>
         <item>mehiläisvaha</item>
         <item>appelsiini</item>
         <item>kerma</item>
     </string-array>
 
-    <string name="yellow_title">Keltainen</string>
-    <string-array name="yellow_colors">
+    <string name="red_title">Punainen</string>
+    <string-array name="red_colors">
         <item>granaattiomena</item>
         <item>marsipaani</item>
         <item>hertta</item>
