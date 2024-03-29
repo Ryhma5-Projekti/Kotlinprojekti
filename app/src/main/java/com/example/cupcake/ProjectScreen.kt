@@ -21,8 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -74,6 +76,9 @@ fun AppBar(
         }
     )
 }
+
+
+
 
 @Composable
 fun KotlinApp(
@@ -187,6 +192,24 @@ fun KotlinApp(
             /** Näyttö4 */
             composable(route = ProjectScreen.Screen4.name) {
 
+                val backgroundColor = Color.Blue
+                val logoPainter = painterResource(R.drawable.bug)
+                val logoColor = Color.Yellow
+                val textColor = Color.Red
+                val text = "bug"
+
+                OrderSummaryScreen(
+                        backgroundColor = backgroundColor,
+                        logo = logoPainter,
+                        logoColor = logoColor,
+                        text = text,
+                        textColor = textColor,
+                        modifier = Modifier.fillMaxHeight()
+                    )
+            }
+            /**
+            composable(route = ProjectScreen.Screen4.name) {
+
                 val context = LocalContext.current      /** Haetaan nykyinen Context-objekti. */
                 OrderSummaryScreen(         /** Käytetään OrderSummaryScreen-komponenttia näyttämään tilausten yhteenveto. */
                     orderUiState = uiState,
@@ -199,7 +222,7 @@ fun KotlinApp(
                     },
                     modifier = Modifier.fillMaxHeight()
                 )
-            }
+            }*/
         }
     }
 }
