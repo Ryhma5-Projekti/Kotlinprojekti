@@ -1,0 +1,56 @@
+
+<resources>
+    <!-- appbar -->
+    <string name="app_name">Kotlin-Sovellus</string>
+    <string name="screen2">Näyttö 2</string>
+    <string name="screen3">Näyttö 3</string>
+    <string name="screen4">Näyttö 4</string>
+
+    <!-- värit -->
+    <string name="colour">First selected colour</string>
+    <string name="colour2">Second colour</string>
+    <string name="blue_title">Sininen</string>
+    <string-array name="blue_colors">
+        <item>ukkonen</item>
+        <item>taivas</item>
+        <item>minttu</item>
+        <item>meri</item>
+    </string-array>
+
+    <string name="red_title">Punainen</string>
+    <string-array name="red_colors">
+        <item>sitruuna</item>
+        <item>mehiläisvaha</item>
+        <item>appelsiini</item>
+        <item>kerma</item>
+    </string-array>
+
+    <string name="yellow_title">Keltainen</string>
+    <string-array name="yellow_colors">
+        <item>granaattiomena</item>
+        <item>marsipaani</item>
+        <item>hertta</item>
+        <item>flamingo</item>
+    </string-array>
+
+    <!-- napit -->
+    <string name="cancel">Cancel</string>
+    <string name="next">Next</string>
+    <string name="back_button">Back</string>
+
+    <string name="order_cupcakes">Order Cupcakes</string>
+    <string name="one_cupcake">One Cupcake</string>
+    <string name="six_cupcakes">Six Cupcakes</string>
+    <string name="twelve_cupcakes">Twelve Cupcakes</string>
+    <string name="special_flavor">Special Flavor</string>
+    <string name="send">Send Order to Another App</string>
+    <string name="quantity">Quantity</string>
+    <string name="subtotal_price">Subtotal %s</string>
+    <string name="total_price">Total %s</string>
+    <string name="new_cupcake_order">New Cupcake Order</string>
+    <string name="order_details">Quantity: %1$s \nFlavor: %2$s \nPickup date: %3$s \nTotal: %4$s \n\nThank you!</string>
+    <plurals name="cupcakes">
+        <item quantity="one">%d cupcake</item>
+        <item quantity="other">%d cupcakes</item>
+    </plurals>
+</resources>
