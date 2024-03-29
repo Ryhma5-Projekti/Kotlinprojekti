@@ -1,8 +1,10 @@
 package com.example.cupcake
 
-import android.content.Context
-import android.content.Intent
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -192,20 +195,57 @@ fun KotlinApp(
             /** Näyttö4 */
             composable(route = ProjectScreen.Screen4.name) {
 
-                val backgroundColor = Color.Blue
+                val color1 = Color(0xFFfff23e)
                 val logoPainter = painterResource(R.drawable.bug)
-                val logoColor = Color.Yellow
-                val textColor = Color.Red
-                val text = "bug"
+                val color2 = Color(0xFFcca000)
+                val color3 = Color(0xFFff792e)
+                val text = "BUG\nBUDDY"
 
-                OrderSummaryScreen(
-                        backgroundColor = backgroundColor,
-                        logo = logoPainter,
-                        logoColor = logoColor,
-                        text = text,
-                        textColor = textColor,
-                        modifier = Modifier.fillMaxHeight()
-                    )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Box(
+                        modifier =  Modifier
+                            .fillMaxSize()
+                            .background(color = color1)
+                    ) {
+                        OrderSummaryScreen(
+                            logo = logoPainter,
+                            logoColor = color2,
+                            textColor = color3,
+                            text = text,
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    Box(
+                        modifier =  Modifier
+                            .fillMaxSize()
+                            .background(color = color2)
+                    ) {
+                        OrderSummaryScreen(
+                            logo = logoPainter,
+                            logoColor = color3,
+                            textColor = color1,
+                            text = text,
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    Box(
+                        modifier =  Modifier
+                            .fillMaxSize()
+                            .background(color = color3)
+                    ) {
+                        OrderSummaryScreen(
+                            logo = logoPainter,
+                            logoColor = color1,
+                            textColor = color2,
+                            text = text,
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+
+                }
             }
             /**
             composable(route = ProjectScreen.Screen4.name) {
@@ -230,6 +270,7 @@ fun KotlinApp(
 /**
  *  funktio palauttaa tilauksen alkutilaan ja siirtyy takaisin aloitusnäyttöön
  */
+
 private fun cancelOrderAndNavigateToStart(
     viewModel: OrderViewModel,
     navController: NavHostController
@@ -241,6 +282,7 @@ private fun cancelOrderAndNavigateToStart(
 /**
  * funktio luo ja käynnistää aikeen tilauksen jakamiseksi.
  */
+/**
 private fun shareOrder(context: Context, subject: String, summary: String) {
     // Create an ACTION_SEND implicit intent with order details in the intent extras
     val intent = Intent(Intent.ACTION_SEND).apply {
@@ -255,3 +297,4 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
         )
     )
 }
+*/

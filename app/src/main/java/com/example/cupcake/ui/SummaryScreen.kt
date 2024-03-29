@@ -1,41 +1,22 @@
 package com.example.cupcake.ui
 
-import android.graphics.Rect
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.ui.graphics.Color
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import com.example.cupcake.R
-import com.example.cupcake.data.OrderUiState
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Card
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.chrisbanes.accompanist.coil.rememberImagePainter
 
-
-import com.example.cupcake.ui.components.FormattedPriceLabel
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
  * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
@@ -43,9 +24,8 @@ import com.example.cupcake.ui.components.FormattedPriceLabel
  */
 @Composable
 fun OrderSummaryScreen(
-    backgroundColor: Color,
-    logo: Painter, // Use Painter for the logo
-    logoColor: Color, // Add color to the logo
+    logo: Painter,
+    logoColor: Color,
     text: String,
     textColor: Color,
     modifier: Modifier = Modifier
@@ -53,31 +33,37 @@ fun OrderSummaryScreen(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = backgroundColor)
-            .padding(16.dp)
+            .padding(horizontal = 26.dp, vertical = 50.dp)
     ) {
-        // Draw the logo with the background color so we can change its color
-        Image(
-            painter = rememberImagePainter(
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
                 painter = logo,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(80.dp)
+                    .align(Alignment.CenterVertically)
+                    .offset(x = 22.dp),
                 colorFilter = ColorFilter.tint(logoColor)
-            ),
-            contentDescription = null,
-            modifier = Modifier
-                .size(100.dp) // Adjust size as needed
-                .align(Alignment.Center)
-        )
-        // Text
-        Text(
-            text = text,
-            color = textColor,
-            style = TextStyle(fontSize = 18.sp),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = text,
+                style = TextStyle(
+                    fontSize = 36.sp,
+                    color = textColor,
+                    fontWeight = FontWeight.Bold,
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
-} }
 }
+
+
+
+
+
 /**
 @Composable
 fun OrderSummaryScreen(
