@@ -26,10 +26,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-/** Yhden kuppikakun hinta */
 private const val PRICE_PER_CUPCAKE = 2.00
 
-/** Lisämaksu saman päivän valinnalle */
 private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
 
 /**
@@ -44,17 +42,6 @@ class OrderViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(OrderUiState(pickupOptions = pickupOptions()))
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
-    /**
-     * Set the quantity [numberCupcakes] of cupcakes for this order's state and update the price
-     */
-    fun setQuantity(numberCupcakes: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                quantity = numberCupcakes,
-                price = calculatePrice(quantity = numberCupcakes)
-            )
-        }
-    }
 
     /**
      * Asettaa [desiredColour] tämän tilauksen valintoihin.
@@ -70,8 +57,56 @@ class OrderViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(colour2 = desiredColour)   /** Asettaa halutun värivalinnan arvoon colour (OrderUiState.kt) */
         }
+        // Kutsu setFinalColour-funktiota vasta, kun molemmat värit on asetettu
+        val colour1 = _uiState.value.colour
+        if (colour1.isNotBlank()) {
+            setFinalColour(colour1, desiredColour)
+        }
+    }
+     fun setFinalColour(colour: String, colour2: String) {
+    if (colour.equals("Yellow" , ignoreCase = true) && colour2.equals ("Blue", ignoreCase = true)){
+    _uiState.update {currentState ->
+        currentState.copy(colourMix = "Green")
+    }
+    }
+         else if (colour.equals("Yellow" , ignoreCase = true) && colour2.equals ("Red", ignoreCase = true)){
+        _uiState.update { currentState ->
+            currentState.copy(colourMix = "Orange")
+        }
+    }
+    else if (colour.equals("White" , ignoreCase = true) && colour2.equals ("Black", ignoreCase = true)){
+        _uiState.update { currentState ->
+            currentState.copy(colourMix = "Grey")
+        }
+    }
+    else {
+        _uiState.update { currentState ->
+            currentState.copy(colourMix = "Jabadabaduu")
+        }
     }
 
+    }
+
+
+    fun resetOrder() {
+        _uiState.value = OrderUiState(pickupOptions = pickupOptions())
+    }
+
+
+
+
+
+    /**
+     * Set the quantity [numberCupcakes] of cupcakes for this order's state and update the price
+     */
+    fun setQuantity(numberCupcakes: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                quantity = numberCupcakes,
+                price = calculatePrice(quantity = numberCupcakes)
+            )
+        }
+    }
 
      /** Asettaa [pickupDate] nykyiselle tilaukselle */
 
@@ -84,12 +119,7 @@ class OrderViewModel : ViewModel() {
         }
     }
 
-    /**
-     * tilauksen resettaus
-     */
-    fun resetOrder() {
-        _uiState.value = OrderUiState(pickupOptions = pickupOptions())
-    }
+
 
     /**
      * palauttaa lasketun hinnan tilauksen tietojen perusteella
@@ -122,3 +152,4 @@ class OrderViewModel : ViewModel() {
         return dateOptions
     }
 }
+

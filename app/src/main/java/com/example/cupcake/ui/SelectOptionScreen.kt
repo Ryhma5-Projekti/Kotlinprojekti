@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.cupcake.R
-import com.example.cupcake.ui.components.FormattedPriceLabel
 
 /**
  * Composable that displays the list of items as [RadioButton] options,
@@ -32,7 +31,6 @@ import com.example.cupcake.ui.components.FormattedPriceLabel
 @Composable
 /** Komponentti, joka luo valintanäytön */
 fun SelectOptionScreen(
-    subtotal: String,                                   /** Tilauksen väliaikainen summa */
     options: List<String>,                              /** Lista vaihtoehdoista */
     onSelectionChanged: (String) -> Unit = {},          /** Toiminto valinnan muuttuessa, oletuksena tyhjä */
     onCancelButtonClicked: () -> Unit = {},             /** Toiminto peruuta-painikkeen klikkaukselle, oletuksena tyhjä */
@@ -46,43 +44,33 @@ fun SelectOptionScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            /** Iteroi läpi vaihtoehdot ja luo jokaiselle rivin */
+
             options.forEach { item ->
                 Row(
                     /** Asettaa rivin valittavaksi, määrittelee toiminnon valinnan muuttumiselle */
                     modifier = Modifier.selectable(
-                        selected = selectedValue == item,   /** Tarkistaa, onko nykyinen arvo valittu */
+                        selected = selectedValue == item,
                         onClick = {
-                            selectedValue = item            /** Asettaa valitun arvon */
-                            onSelectionChanged(item)        /** Kutsuu toimintoa valinnan muuttuessa / asettaa valinnan muistiin */
+                            selectedValue = item
+                            onSelectionChanged(item)
                         }
                     ),
                     verticalAlignment = Alignment.CenterVertically
-                ) {
+                ){
                     /** Luo radiopainikkeen ja tekstin jokaiselle riville */
                     RadioButton(
-                        selected = selectedValue == item,   /** Asettaa radiopainikkeen valituksi, jos arvo on valittu */
+                        selected = selectedValue == item,
                         onClick = {
-                            selectedValue = item            /** Asettaa valitun arvon */
-                            onSelectionChanged(item)        /** Kutsuu toimintoa valinnan muuttuessa */
+                            selectedValue = item
+                            onSelectionChanged(item)
                         }
                     )
-                    Text(item)          /** Näyttää vaihtoehdon tekstin */
+                    Text(item)
                 }
             }
             Divider(
                 thickness = dimensionResource(R.dimen.thickness_divider),
                 modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
-            )
-            /** Tämän hetkisen summan näyttävä osuus */
-            FormattedPriceLabel(
-                subtotal = subtotal,    /** Tämän hetkinen summa */
-                modifier = Modifier
-                    .align(Alignment.End)     /** Tyyli */
-                    .padding(
-                        top = dimensionResource(R.dimen.padding_medium),
-                        bottom = dimensionResource(R.dimen.padding_medium)
-                    )
             )
         }
         /** Alarivi jossa kaksi nappia */
@@ -93,37 +81,19 @@ fun SelectOptionScreen(
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
             verticalAlignment = Alignment.Bottom
         ) {
-            OutlinedButton(                         /** Nappi */
+            OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = onCancelButtonClicked     /** jota painamalla suorittaa funktion onCancelButtonClicked */
+                onClick = onCancelButtonClicked
             ) {
-                Text(stringResource(R.string.cancel))      /** ja jossa lukee cancel */
+                Text(stringResource(R.string.cancel))
             }
-            Button(                                 /** Nappi */
+            Button(
                 modifier = Modifier.weight(1f),
-
-                enabled = selectedValue.isNotEmpty(),   /** joka toimii vasta kun asiakas on tehnyt valinnan */
-                onClick = onNextButtonClicked           /** kun nappia painaa se ajaa funktion onNextButtonClicked */
+                enabled = selectedValue.isNotEmpty(),
+                onClick = onNextButtonClicked
             ) {
                 Text(stringResource(R.string.next))
             }
         }
     }
-
 }
-
-
-
-/**
-@Preview
-@Composable
-fun SelectOptionPreview() {
-    CupcakeTheme {
-        SelectOptionScreen(
-            subtotal = "299.99",
-            options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-            modifier = Modifier.fillMaxHeight()
-        )
-    }
-}
-*/

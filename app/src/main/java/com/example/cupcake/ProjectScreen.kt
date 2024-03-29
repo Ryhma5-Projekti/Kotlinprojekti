@@ -51,8 +51,8 @@ enum class ProjectScreen(@StringRes val title: Int) {
  */
 @Composable
 fun AppBar(
-    currentScreen: ProjectScreen,      /** määritelty edellisessä osiossa (Start, Screen2 jne..) */
-    canNavigateBack: Boolean,       /** Onko mahdollista navigoida takaisin */
+    currentScreen: ProjectScreen,
+    canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -100,21 +100,17 @@ fun KotlinApp(
 
         NavHost(
             navController = navController,
-            startDestination = ProjectScreen.Screen1.name,    /** määritellään aloitusruutu */
+            startDestination = ProjectScreen.Screen1.name,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())  /** sovellusta voi scrollata */
+                .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
             /** Aloitusnäyttö */
             composable(route = ProjectScreen.Screen1.name) {
-                StartOrderScreen(           /** StartOrderScreen.kt */
-                    quantityOptions = DataSource.colours2,   /** asetetaan colours2 lista (DataSource.kt) muuttujaan */
-                    onNextButtonClicked = {         /** Kun "Next" nappia painetaan */
-                        viewModel.setQuantity(it)        /** asetetaan arvo muuttujaan quantity,
-                                                        funktion setQuantity sisällä tiedostossa
-                                                        OrderViewModel.kt, jonka jälkeen navigoi
-                                                            seuraavaan näkymään */
+                StartOrderScreen(
+                 //   quantityOptions = DataSource.colours2,
+                    onNextButtonClicked = {
                         navController.navigate(ProjectScreen.Screen2.name)
                     },
                     modifier = Modifier
@@ -126,15 +122,14 @@ fun KotlinApp(
             /** Näyttö 2 */
             composable(route = ProjectScreen.Screen2.name) {
                 val context = LocalContext.current
-                SelectOptionScreen(         /** SelectOptionScreen.kt */
-                    subtotal = uiState.price,
-                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen3.name) },   /** Seuraava näyttö */
-                    onCancelButtonClicked = {           /** peruu tilauksen ja palaa alkuun */
+                SelectOptionScreen(
+                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen3.name) },
+                    onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
                     /** Hakee värivaihtoehdot listasta id:n perusteella (DataSource.kt) ja asettaa ne options listaan */
                     options = DataSource.colours.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setColour(it) },   /** Asettaa valitun värin muuttujaan */
+                    onSelectionChanged = { viewModel.setColour(it) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
@@ -142,44 +137,26 @@ fun KotlinApp(
             /** Näyttö 3 */
             composable(route = ProjectScreen.Screen3.name) {
                 val context = LocalContext.current
-                SelectOptionScreen(         /** SelectOptionScreen.kt */
-                    subtotal = uiState.price,
-                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen4.name) },   /** Seuraava näyttö */
-                    onCancelButtonClicked = {           /** peruu tilauksen ja palaa alkuun */
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    /** Hakee värivaihtoehdot listasta id:n perusteella (DataSource.kt) ja asettaa ne options listaan */
-                    options = DataSource.colours3.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setColour2(it) },   /** Asettaa valitun värin muuttujaan */
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-
-            /** Näyttö 3 (toimii aikalailla samalla tavalla kuin näyttö 2)
-            composable(route = ProjectScreen.Screen3.name) {
-                SelectOptionScreen(         /** SelectOptionScreen.kt */
-                    subtotal = uiState.price,      /** hakee loppusumman (OrderUiState.kt) ja asettaa sen muuttujaan */
+                SelectOptionScreen(
                     onNextButtonClicked = { navController.navigate(ProjectScreen.Screen4.name) },
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
-                    /** hakee pvm vaihtoehdot (OrderUiState.kt) ja asettaa ne vaihtoehtojen listaan (OrderViewModel.kt)*/
-                    options = uiState.pickupOptions,
-                    onSelectionChanged = { viewModel.setDate(it) },
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }*/
+                    options = DataSource.colours3.map { id -> context.resources.getString(id) },
+                    onSelectionChanged = { viewModel.setColour2(it) },
+                    modifier = Modifier.fillMaxHeight(),
 
+                )
+            }
             /** Näyttö4 */
             composable(route = ProjectScreen.Screen4.name) {
 
-                val context = LocalContext.current      /** Haetaan nykyinen Context-objekti. */
+                val context = LocalContext.current
                 OrderSummaryScreen(         /** Käytetään OrderSummaryScreen-komponenttia näyttämään tilausten yhteenveto. */
                     orderUiState = uiState,
-                    onCancelButtonClicked = {                   /** Määritellään toiminto peruuta-painikkeelle. */
+                    onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
-                    /** Määritellään toiminto lähetä-painikkeelle, joka jakaa tilaustiedot. */
                     onSendButtonClicked = { subject: String, summary: String ->
                         shareOrder(context, subject = subject, summary = summary)
                     },
@@ -214,7 +191,7 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
     context.startActivity(
         Intent.createChooser(
             intent,
-            context.getString(R.string.new_cupcake_order)
+            context.getString(R.string.new_colour_choice)
         )
     )
 }

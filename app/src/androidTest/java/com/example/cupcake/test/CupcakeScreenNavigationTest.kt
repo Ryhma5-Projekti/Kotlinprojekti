@@ -50,12 +50,7 @@ class CupcakeScreenNavigationTest {
         composeTestRule.onNodeWithContentDescription(backText).assertDoesNotExist()
     }
 
-    @Test
-    fun cupcakeNavHost_clickOneCupcake_navigatesToSelectFlavorScreen() {
-        composeTestRule.onNodeWithStringId(R.string.one_cupcake)
-            .performClick()
-        navController.assertCurrentRouteName(ProjectScreen.Screen2.name)
-    }
+
 
     @Test
     fun cupcakeNavHost_clickNextOnFlavorScreen_navigatesToPickupScreen() {
@@ -114,8 +109,6 @@ class CupcakeScreenNavigationTest {
     }
 
     private fun navigateToFlavorScreen() {
-        composeTestRule.onNodeWithStringId(R.string.one_cupcake)
-            .performClick()
         composeTestRule.onNodeWithStringId(R.string.red)
             .performClick()
     }

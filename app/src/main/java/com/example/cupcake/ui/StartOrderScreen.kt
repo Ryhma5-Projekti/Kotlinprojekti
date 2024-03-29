@@ -27,69 +27,50 @@ import com.example.cupcake.R
  */
 @Composable
 fun StartOrderScreen(
-    quantityOptions: List<Pair<Int, Int>>,  /** Lista määrävaihtoehdoista, määritelty ProjectScreen.kt:ssa*/
-    onNextButtonClicked: (Int) -> Unit,     /**  Odottaa kokonaislukuarvoa (Int) parametrina ja palauttaa yksikkötyypin (Unit) */
+    onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier       /**  Komponentin ulkoasun muokkaamiseen tarvittavat Modifier -objektit */
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        /** Ensimmäinen column (Kuppikakku-kuva ja teksti) */
+        /** Ensimmäinen column (Logo-kuva ja teksti) */
         Column(
-            modifier = Modifier.fillMaxWidth(),     /** Täyttää koko leveyden */
-            horizontalAlignment = Alignment.CenterHorizontally,     /** Asettaa vaakasuuntaisen keskityksen */
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))  /**  ja pystysuuntaisen järjestelyn,
-                                                            jossa välit määräytyvät ulkoisesta resurssista (dimens.xml) */
-) {
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))   /** Lisää tyhjää tilaa pystysuunnassa */
-            Image(                                              /** näyttää kuvan cupcake */
-                painter = painterResource(R.drawable.cupcake),  /** (drawable/cupcake.xml) */
-                contentDescription = null,                      /** jolla ei ole sisältökuvausta */
-                modifier = Modifier.width(300.dp)               /**  ja määrittelee leveyden */
-            )
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
+        ) {
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
-            Text(                                                   /** Näyttää tekstin */
-                text = stringResource(R.string.order_cupcakes),           /** joka haetaan resursseista (strings.xml) */
-                style = MaterialTheme.typography.headlineSmall    /** käyttäen tiettyä tyylitiedostoa */
+            Image(
+                painter = painterResource(R.drawable.logo),
+                contentDescription = null,
+                modifier = Modifier.width(300.dp)
             )
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))    /** Lisää tyhjää tilaa pystysuunnassa */
+
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+            Text(
+                text = stringResource(R.string.alkuteksti),
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
         }
 
-        /** toinen column (määrä vaihtoehdot / niiden napit) */
+        /** toinen column (napit) */
         Column(
-            modifier = Modifier.fillMaxWidth(),     /** Täyttää koko leveyden */
-            horizontalAlignment = Alignment.CenterHorizontally,     /** Asettaa vaakasuuntaisen keskityksen */
-            verticalArrangement = Arrangement.spacedBy(            /** Ja pystysuuntaisen järjestelyn */
-                dimensionResource(id = R.dimen.padding_medium)                      /** jossa välit määräytyvät ulkoisesta resurssista (dimens.xml) */
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                dimensionResource(id = R.dimen.padding_medium)
             )
         ) {
-            quantityOptions.forEach { item ->       /** Literoi läpi määrävaihtoehtojen listan */
-                SelectQuantityButton(              /** ja luo jokaiselle vaihtoehdolle napin */
-                    labelResourceId = item.first,   /** Asettaa napin tekstin resurssitunnisteen perusteella */
-                    onClick = { onNextButtonClicked(item.second) },   /** kun valintanappia painetaan sivu vaihtuu automaattisesti */
-                    modifier = Modifier.fillMaxWidth(),
-                )
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onNextButtonClicked
+            ) {
+                Text(stringResource(R.string.next))
             }
         }
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
     }
 }
-
-/**
- * Customizable button composable that displays the [labelResourceId]
- * and triggers [onClick] lambda when this composable is clicked
- */
-@Composable
-fun SelectQuantityButton(
-    @StringRes labelResourceId: Int,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.widthIn(min = 250.dp)
-    ) {
-        Text(stringResource(labelResourceId))
-    }
-}
-

@@ -5,14 +5,12 @@ package com.example.cupcake.data
  * [dateOptions], selected pickup [colour2] and [price]
  */
 data class OrderUiState(
-    /** Valittu määrä */
     val quantity: Int = 0,
-    /** värivaihtoehdot katso data/DataSource */
     val colour: String = "",
-    /** Valittu päivämäärä */
     val colour2: String = "",
-    /** Tilauksen kokonaiskustannus */
+    val colourMix: String ="",
+
+
     val price: String = "",
-    /** Mahdolliset päivämäärät*/
     val pickupOptions: List<String> = listOf()
 )

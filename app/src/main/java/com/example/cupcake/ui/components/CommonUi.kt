@@ -11,9 +11,9 @@ import com.example.cupcake.R
  * Composable that displays formatted [price] that will be formatted and displayed on screen
  */
 @Composable
-fun FormattedPriceLabel(subtotal: String, modifier: Modifier = Modifier) {
+fun FinalColourLabel(subtotal: String, modifier: Modifier = Modifier) {
     Text(
-        text = stringResource(R.string.subtotal_price, subtotal),
+        text = stringResource(R.string.colour_mix, subtotal),
         modifier = modifier,
         style = MaterialTheme.typography.headlineSmall
     )
