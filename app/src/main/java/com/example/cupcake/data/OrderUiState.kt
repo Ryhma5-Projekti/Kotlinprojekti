@@ -9,7 +9,7 @@ data class OrderUiState(
     val colour: String = "",
     val colour2: String = "",
     val colourMix: String ="",
-
+    val colours: List<String?> = listOf(),
 
     val price: String = "",
     val pickupOptions: List<String> = listOf()

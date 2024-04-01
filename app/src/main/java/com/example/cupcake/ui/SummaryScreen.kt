@@ -1,26 +1,23 @@
 package com.example.cupcake.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import com.example.cupcake.R
-import com.example.cupcake.data.OrderUiState
-import com.example.cupcake.ui.components.FinalColourLabel
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.cupcake.data.ColorLibrary
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
@@ -29,75 +26,48 @@ import com.example.cupcake.ui.components.FinalColourLabel
  */
 @Composable
 fun OrderSummaryScreen(
-    orderUiState: OrderUiState,
-    onCancelButtonClicked: () -> Unit,
-    onSendButtonClicked: (String, String) -> Unit,
+    logo: Painter,
+    bcrColor: String,
+    logoColor: String,
+    text: String,
+    textColor: String,
     modifier: Modifier = Modifier
 ) {
-    val resources = LocalContext.current.resources
-
-    val numberOfCupcakes = resources.getQuantityString(
-        R.plurals.cupcakes,
-        orderUiState.quantity,
-        orderUiState.quantity
-    )
-    val orderSummary = stringResource(
-        R.string.order_details,
-        numberOfCupcakes,
-        orderUiState.colour,
-        orderUiState.colour2,
-        orderUiState.quantity
-    )
-    val newOrder = stringResource(R.string.new_colour_choice)
-
-    val items = listOf(                 /** Luodaan tilauksen yhteenvetojen lista näyttämistä varten */
-        Pair(stringResource(R.string.colour), orderUiState.colour),
-        Pair(stringResource(R.string.colour2), orderUiState.colour2)
-    )
-
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween
+    /**
+    val colorHex = getColorHex(logoColor)
+     */
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp, vertical = 50.dp)
+            .background(color = getColorHex(bcrColor))
     ) {
-        Column(
-            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
-        ) {
-            items.forEach { item ->             /** listan jokaiselle yhteenvedolle oma rivi */
-                Text(item.first.uppercase())
-                Text(text = item.second, fontWeight = FontWeight.Bold)
-                Divider(thickness = dimensionResource(R.dimen.thickness_divider))
-            }
-
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
-
-            FinalColourLabel(
-                subtotal = orderUiState.colourMix,
-                modifier = Modifier.align(Alignment.End)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                painter = logo,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(80.dp)
+                    .align(Alignment.CenterVertically)
+                    .offset(x = 22.dp),
+                colorFilter = ColorFilter.tint(getColorHex(logoColor))
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = text,
+                style = TextStyle(
+                    fontSize = 36.sp,
+                    color = getColorHex(textColor),
+                    fontWeight = FontWeight.Bold,
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1f)
             )
         }
-        Row(
-            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
-        ) {
-                /** Lohko, joka sisältää kaksi nappia. */
-            Column(
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
-            ) {
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { onSendButtonClicked(newOrder, orderSummary) }
-                ) {
-                    Text(stringResource(R.string.send))
-                }
 
-                OutlinedButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onCancelButtonClicked
-                ) {
-                    Text(stringResource(R.string.cancel))
-                }
-            }
-        }
     }
 }
 
+private fun getColorHex(colorName: String): Color {
+    return ColorLibrary.colors[colorName] ?: Color.Black // Return black if color not found
+}

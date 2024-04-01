@@ -1,8 +1,9 @@
 package com.example.cupcake
 
-import android.content.Context
-import android.content.Intent
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,7 +24,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -122,14 +125,16 @@ fun KotlinApp(
             /** Näyttö 2 */
             composable(route = ProjectScreen.Screen2.name) {
                 val context = LocalContext.current
-                SelectOptionScreen(
-                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen3.name) },
-                    onCancelButtonClicked = {
+                SelectOptionScreen(         /** SelectOptionScreen.kt */
+                    multiSelection = false,
+                    subtotal = uiState.price,
+                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen3.name) },   /** Seuraava näyttö */
+                    onCancelButtonClicked = {           /** peruu tilauksen ja palaa alkuun */
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
                     /** Hakee värivaihtoehdot listasta id:n perusteella (DataSource.kt) ja asettaa ne options listaan */
-                    options = DataSource.colours.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setColour(it) },
+                    options = DataSource.colours.map { id -> context.resources.getString(id.first) },
+                    onSelectionChanged = { viewModel.setColour(it) },   /** Asettaa valitun värin muuttujaan */
                     modifier = Modifier.fillMaxHeight()
                 )
             }
@@ -138,30 +143,100 @@ fun KotlinApp(
             composable(route = ProjectScreen.Screen3.name) {
                 val context = LocalContext.current
                 SelectOptionScreen(
+                    multiSelection = true,
+                    subtotal = uiState.price,
                     onNextButtonClicked = { navController.navigate(ProjectScreen.Screen4.name) },
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
+                    onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
+                    options = DataSource.colours
+                        .filter { pair ->
+                            // Filter out colours that aren't under the selected colour
+                            context.resources.getString(pair.first) == viewModel.getColour()
+                        }
+                        .flatMap { pair ->
+                            // Retrieve the array resource ID from the pair
+                            val arrayResourceId = pair.second
+                            // Retrieve the array of strings using the resource ID
+                            val array = context.resources.getStringArray(arrayResourceId)
+                            // Convert the array into a list of strings
+                            array.toList()
+
+                        },
+                    onMultiSelectionChanged = { selectedColor ->
+                        viewModel.setColours(selectedColor.filterNotNull())
                     },
-                    options = DataSource.colours3.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setColour2(it) },
-                    modifier = Modifier.fillMaxHeight(),
+                    modifier = Modifier.fillMaxHeight()
 
                 )
             }
             /** Näyttö4 */
             composable(route = ProjectScreen.Screen4.name) {
+                val coloursList = viewModel.getColours().take(3)
+                val defaultColor = "hertta"
 
-                val context = LocalContext.current
-                OrderSummaryScreen(         /** Käytetään OrderSummaryScreen-komponenttia näyttämään tilausten yhteenveto. */
-                    orderUiState = uiState,
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String ->
-                        shareOrder(context, subject = subject, summary = summary)
-                    },
-                    modifier = Modifier.fillMaxHeight()
+                val colorsArray = arrayOf(
+                    if (coloursList.isNotEmpty()) coloursList[0] else defaultColor,
+                    if (coloursList.size >= 2) coloursList[1] else defaultColor,
+                    if (coloursList.size >= 3) coloursList[2] else defaultColor
                 )
+
+                /**
+                val bcrColor = Color(0xFFfff23e)
+                val color1 = Color(0xFFfff23e)
+                val color2 = Color(0xFFfff23e)
+                val color3 = Color(0xFFfff23e)
+
+                val color1 = if (coloursList.isNotEmpty()) Color(android.graphics.Color.parseColor(coloursList[0])) else defaultColor
+                val color2 = if (coloursList.size >= 2) Color(android.graphics.Color.parseColor(coloursList[1])) else defaultColor
+                val color3 = if (coloursList.size >= 3) Color(android.graphics.Color.parseColor(coloursList[2])) else defaultColor
+                 */
+                val logoPainter = painterResource(R.drawable.bug)
+                val text = "BUG\nBUDDY"
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Box(
+                        modifier =  Modifier
+                            .fillMaxSize()
+                    ) {
+                        OrderSummaryScreen(
+                            logo = logoPainter,
+                            logoColor = colorsArray[1]!!,
+                            textColor = colorsArray[2]!!,
+                            bcrColor = colorsArray[0]!!,
+                            text = text,
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    Box(
+                        modifier =  Modifier
+                            .fillMaxSize()
+                    ) {
+                        OrderSummaryScreen(
+                            logo = logoPainter,
+                            logoColor = colorsArray[2]!!,
+                            textColor = colorsArray[0]!!,
+                            bcrColor = colorsArray[1]!!,
+                            text = text,
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+                    Box(
+                        modifier =  Modifier
+                            .fillMaxSize()
+                    ) {
+                        OrderSummaryScreen(
+                            logo = logoPainter,
+                            logoColor = colorsArray[0]!!,
+                            textColor = colorsArray[1]!!,
+                            bcrColor = colorsArray[2]!!,
+                            text = text,
+                            modifier = Modifier.fillMaxHeight()
+                        )
+                    }
+
+                }
             }
         }
     }
@@ -180,7 +255,7 @@ private fun cancelOrderAndNavigateToStart(
 
 /**
  * funktio luo ja käynnistää aikeen tilauksen jakamiseksi.
- */
+
 private fun shareOrder(context: Context, subject: String, summary: String) {
     // Create an ACTION_SEND implicit intent with order details in the intent extras
     val intent = Intent(Intent.ACTION_SEND).apply {
@@ -195,3 +270,4 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
         )
     )
 }
+ */

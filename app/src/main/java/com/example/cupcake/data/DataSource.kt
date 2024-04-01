@@ -4,19 +4,14 @@ import com.example.cupcake.R
 
 object DataSource {
     val colours = listOf(
-        R.string.white,
-        R.string.purple,
-        R.string.yellow,
-        )
+        Pair(R.string.blue_title, R.array.blue_colors),
+        Pair(R.string.red_title, R.array.red_colors),
+        Pair(R.string.yellow_title, R.array.yellow_colors),
+    )
 
-    val colours3 = listOf(
-        R.string.red,
-        R.string.blue,
-        R.string.black,
-        )
-
-    /** val colours2 = listOf(
+   /* val colours2 = listOf(
+        Pair(R.string.one_cupcake, 1),
         Pair(R.string.six_cupcakes, 6),
         Pair(R.string.twelve_cupcakes, 12)
-    ) */
+    )*/
 }

@@ -1,35 +1,48 @@
 
 <resources>
     // appbar
-    <string name="app_name">Kotlin-Sovellus</string>
-    <string name="screen2">Näyttö 2</string>
-    <string name="screen3">Näyttö 3</string>
-    <string name="screen4">Näyttö 4</string>
+    <string name="app_name">Colormix</string>
+    <string name="screen2">Värimaailma</string>
+    <string name="screen3">Valitse sävyt</string>
+    <string name="screen4">Lopputulokset</string>
 
-    // 1. värit
-    <string name="colour">First selected colour</string>
-    <string name="white">White</string>
-    <string name="yellow">Yellow</string>
-    <string name="purple">Purple</string>
 
-    // 2. värit
-    <string name="colour2">Second colour</string>
-    <string name="red">Red</string>
-    <string name="blue">Blue</string>
-    <string name="black">Black</string>
+
+    <string name="blue_title">Sininen</string>
+    <string-array name="blue_colors">
+        <item>ukkonen</item>
+        <item>taivas</item>
+        <item>minttu</item>
+        <item>meri</item>
+    </string-array>
+
+    <string name="yellow_title">Keltainen</string>
+    <string-array name="yellow_colors">
+        <item>sitruuna</item>
+        <item>mehiläisvaha</item>
+        <item>appelsiini</item>
+        <item>kerma</item>
+    </string-array>
+
+    <string name="red_title">Punainen</string>
+    <string-array name="red_colors">
+        <item>granaattiomena</item>
+        <item>marsipaani</item>
+        <item>hertta</item>
+        <item>flamingo</item>
+    </string-array>
+
+
 
     // napit
-    <string name="cancel">Cancel</string>
-    <string name="next">Next</string>
-    <string name="back_button">Back</string>
+    <string name="cancel">Peru</string>
+    <string name="next">Seuraava</string>
+    <string name="back_button">Takaisin</string>
     <string name="send">Send Order to Another App</string>
 
     <string name="colour_mix">Colour mixture: %s</string>
-    <string name="alkuteksti">Welcome!</string>
+    <string name="alkuteksti">Tervetuloa!</string>
 
-
-  //  <string name="six_cupcakes">Six Cupcakes</string>
-  //  <string name="twelve_cupcakes">Twelve Cupcakes</string>
 
     <string name="quantity">Quantity</string>
     <string name="total_price">Total %s</string>
