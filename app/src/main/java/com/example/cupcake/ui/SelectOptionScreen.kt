@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.cupcake.R
-import com.example.cupcake.ui.components.FormattedPriceLabel
 
 /**
  * Composable that displays the list of items as [RadioButton] options,
@@ -33,7 +32,7 @@ import com.example.cupcake.ui.components.FormattedPriceLabel
 /** Komponentti, joka luo valintanäytön */
 fun SelectOptionScreen(
     modifier: Modifier = Modifier,                       /** Ulkoasun muokkaukseen käytettävä Modifier-objekti, oletuksena tyhjä */
-    subtotal: String,                                   /** Tilauksen väliaikainen summa */
+    // subtotal: String,                                   /** Tilauksen väliaikainen summa */
     options: List<String>,                              /** Lista vaihtoehdoista */
     onSelectionChanged: (String) -> Unit = {},          /** Toiminto valinnan muuttuessa, oletuksena tyhjä */
     onMultiSelectionChanged: (Set<String?>) -> Unit = {},
@@ -87,15 +86,15 @@ fun SelectOptionScreen(
                 modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
             )
             /** Tämän hetkisen summan näyttävä osuus */
-            FormattedPriceLabel(
-                subtotal = subtotal,    /** Tämän hetkinen summa */
-                modifier = Modifier
-                    .align(Alignment.End)     /** Tyyli */
-                    .padding(
-                        top = dimensionResource(R.dimen.padding_medium),
-                        bottom = dimensionResource(R.dimen.padding_medium)
-                    )
-            )
+//            FormattedPriceLabel(
+//                subtotal = subtotal,    /** Tämän hetkinen summa */
+//                modifier = Modifier
+//                    .align(Alignment.End)     /** Tyyli */
+//                    .padding(
+//                        top = dimensionResource(R.dimen.padding_medium),
+//                        bottom = dimensionResource(R.dimen.padding_medium)
+//                    )
+//            )
         }
         /** Alarivi jossa kaksi nappia */
         Row(

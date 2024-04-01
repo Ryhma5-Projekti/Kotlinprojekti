@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.example.cupcake.data.ColorLibrary
 import com.example.cupcake.data.OrderUiState
 import com.example.cupcake.R
-import com.example.cupcake.ui.components.FormattedPriceLabel
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
@@ -99,7 +98,7 @@ fun OrderSummaryScreen(
     val newOrder = stringResource(R.string.new_cupcake_order)
 
     val items = listOf(                 /** Luodaan tilauksen yhteenvetojen lista näyttämistä varten */
-        Pair(stringResource(R.string.quantity), numberOfCupcakes),      /** Yhteenveto rivi 1: näyttää valitun määrän */
+        // Pair(stringResource(R.string.quantity), numberOfCupcakes),      /** Yhteenveto rivi 1: näyttää valitun määrän */
         Pair(stringResource(R.string.colour), orderUiState.colour),     /** Yhteenveto rivi 2: näyttää valitun värin */
         Pair(stringResource(R.string.colour2), orderUiState.colours)        /** Yhteenveto rivi 3: näyttää toisen valitun värin */
     )
@@ -125,10 +124,10 @@ fun OrderSummaryScreen(
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
             /** komponentti, joka näyttää hinnan muotoillusti. */
             /** Tässä annetaan tilausrivin hinta ja lisätään sille muokkain, joka kohdistetaan oikeaan reunaan. */
-            FormattedPriceLabel(
-                subtotal = orderUiState.price,
-                modifier = Modifier.align(Alignment.End)
-            )
+//            FormattedPriceLabel(
+//                subtotal = orderUiState.price,
+//                modifier = Modifier.align(Alignment.End)
+//            )
         }
         Row(
             modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
