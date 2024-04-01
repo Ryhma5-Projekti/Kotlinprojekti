@@ -114,7 +114,7 @@ fun SelectOptionScreen(
             Button(                                 /** Nappi */
                 modifier = Modifier.weight(1f),
 
-                enabled = selectedValue.isNotEmpty() || selectedValues.size >= 3,   /** joka toimii vasta kun asiakas on tehnyt valinnan */
+                enabled = selectedValue.isNotEmpty() || selectedValues.size == 3,   /** joka toimii vasta kun asiakas on tehnyt valinnan */
                 onClick = onNextButtonClicked           /** kun nappia painaa se ajaa funktion onNextButtonClicked */
             ) {
                 Text(stringResource(R.string.next))

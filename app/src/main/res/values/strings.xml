@@ -1,9 +1,9 @@
 
 <resources>
     <!-- appbar -->
-    <string name="app_name">ColorPalette-Sovellus</string>
-    <string name="screen2">Värimaailma</string>
-    <string name="screen3">Värivalinnat</string>
+    <string name="app_name">ColorPalette-sovellus</string>
+    <string name="screen2">Valitse värimaailma</string>
+    <string name="screen3">Valitse kolme väriä</string>
     <string name="screen4">Lopputulos</string>
 
     <!-- värit -->
