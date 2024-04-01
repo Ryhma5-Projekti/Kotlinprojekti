@@ -1,5 +1,7 @@
 package com.example.cupcake
 
+import android.content.Context
+import android.content.Intent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -193,76 +195,76 @@ fun KotlinApp(
             }*/
 
             /** Näyttö4 */
-            composable(route = ProjectScreen.Screen4.name) {
-                val coloursList = viewModel.getColours().take(3)
-                val defaultColor = "hertta"
+//            composable(route = ProjectScreen.Screen4.name) {
+//                val coloursList = viewModel.getColours().take(3)
+//                val defaultColor = "hertta"
+//
+//                val colorsArray = arrayOf(
+//                    if (coloursList.isNotEmpty()) coloursList[0] else defaultColor,
+//                    if (coloursList.size >= 2) coloursList[1] else defaultColor,
+//                    if (coloursList.size >= 3) coloursList[2] else defaultColor
+//                    )
+//
+//                /**
+//                val bcrColor = Color(0xFFfff23e)
+//                val color1 = Color(0xFFfff23e)
+//                val color2 = Color(0xFFfff23e)
+//                val color3 = Color(0xFFfff23e)
+//
+//                val color1 = if (coloursList.isNotEmpty()) Color(android.graphics.Color.parseColor(coloursList[0])) else defaultColor
+//                val color2 = if (coloursList.size >= 2) Color(android.graphics.Color.parseColor(coloursList[1])) else defaultColor
+//                val color3 = if (coloursList.size >= 3) Color(android.graphics.Color.parseColor(coloursList[2])) else defaultColor
+//                */
+//                val logoPainter = painterResource(R.drawable.bug)
+//                val text = "BUG\nBUDDY"
+//
+//                Column(
+//                    modifier = Modifier.fillMaxSize(),
+//                    verticalArrangement = Arrangement.spacedBy(16.dp)
+//                ) {
+//                    Box(
+//                        modifier =  Modifier
+//                            .fillMaxSize()
+//                    ) {
+//                        OrderSummaryScreen(
+//                            logo = logoPainter,
+//                            logoColor = colorsArray[1]!!,
+//                            textColor = colorsArray[2]!!,
+//                            bcrColor = colorsArray[0]!!,
+//                            text = text,
+//                            modifier = Modifier.fillMaxHeight()
+//                        )
+//                    }
+//                    Box(
+//                        modifier =  Modifier
+//                            .fillMaxSize()
+//                    ) {
+//                        OrderSummaryScreen(
+//                            logo = logoPainter,
+//                            logoColor = colorsArray[2]!!,
+//                            textColor = colorsArray[0]!!,
+//                            bcrColor = colorsArray[1]!!,
+//                            text = text,
+//                            modifier = Modifier.fillMaxHeight()
+//                        )
+//                    }
+//                    Box(
+//                        modifier =  Modifier
+//                            .fillMaxSize()
+//                    ) {
+//                        OrderSummaryScreen(
+//                            logo = logoPainter,
+//                            logoColor = colorsArray[0]!!,
+//                            textColor = colorsArray[1]!!,
+//                            bcrColor = colorsArray[2]!!,
+//                            text = text,
+//                            modifier = Modifier.fillMaxHeight()
+//                        )
+//                    }
+//
+//                }
+//            }
 
-                val colorsArray = arrayOf(
-                    if (coloursList.isNotEmpty()) coloursList[0] else defaultColor,
-                    if (coloursList.size >= 2) coloursList[1] else defaultColor,
-                    if (coloursList.size >= 3) coloursList[2] else defaultColor
-                    )
-
-                /**
-                val bcrColor = Color(0xFFfff23e)
-                val color1 = Color(0xFFfff23e)
-                val color2 = Color(0xFFfff23e)
-                val color3 = Color(0xFFfff23e)
-
-                val color1 = if (coloursList.isNotEmpty()) Color(android.graphics.Color.parseColor(coloursList[0])) else defaultColor
-                val color2 = if (coloursList.size >= 2) Color(android.graphics.Color.parseColor(coloursList[1])) else defaultColor
-                val color3 = if (coloursList.size >= 3) Color(android.graphics.Color.parseColor(coloursList[2])) else defaultColor
-                */
-                val logoPainter = painterResource(R.drawable.bug)
-                val text = "BUG\nBUDDY"
-
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Box(
-                        modifier =  Modifier
-                            .fillMaxSize()
-                    ) {
-                        OrderSummaryScreen(
-                            logo = logoPainter,
-                            logoColor = colorsArray[1]!!,
-                            textColor = colorsArray[2]!!,
-                            bcrColor = colorsArray[0]!!,
-                            text = text,
-                            modifier = Modifier.fillMaxHeight()
-                        )
-                    }
-                    Box(
-                        modifier =  Modifier
-                            .fillMaxSize()
-                    ) {
-                        OrderSummaryScreen(
-                            logo = logoPainter,
-                            logoColor = colorsArray[2]!!,
-                            textColor = colorsArray[0]!!,
-                            bcrColor = colorsArray[1]!!,
-                            text = text,
-                            modifier = Modifier.fillMaxHeight()
-                        )
-                    }
-                    Box(
-                        modifier =  Modifier
-                            .fillMaxSize()
-                    ) {
-                        OrderSummaryScreen(
-                            logo = logoPainter,
-                            logoColor = colorsArray[0]!!,
-                            textColor = colorsArray[1]!!,
-                            bcrColor = colorsArray[2]!!,
-                            text = text,
-                            modifier = Modifier.fillMaxHeight()
-                        )
-                    }
-
-                }
-            }
-            /**
             composable(route = ProjectScreen.Screen4.name) {
 
                 val context = LocalContext.current      /** Haetaan nykyinen Context-objekti. */
@@ -277,7 +279,7 @@ fun KotlinApp(
                     },
                     modifier = Modifier.fillMaxHeight()
                 )
-            }*/
+            }
         }
     }
 }
@@ -297,7 +299,6 @@ private fun cancelOrderAndNavigateToStart(
 /**
  * funktio luo ja käynnistää aikeen tilauksen jakamiseksi.
  */
-/**
 private fun shareOrder(context: Context, subject: String, summary: String) {
     // Create an ACTION_SEND implicit intent with order details in the intent extras
     val intent = Intent(Intent.ACTION_SEND).apply {
@@ -312,4 +313,3 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
         )
     )
 }
-*/
