@@ -1,7 +1,6 @@
 package com.example.cupcake
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -169,11 +167,13 @@ fun KotlinApp(
                             val array = context.resources.getStringArray(arrayResourceId)
                             // Convert the array into a list of strings
                             array.toList()
+
                         },
                     onMultiSelectionChanged = { selectedColor ->
                         viewModel.setColours(selectedColor.filterNotNull())
                     },
                     modifier = Modifier.fillMaxHeight()
+
                 )
             }
 
@@ -194,11 +194,26 @@ fun KotlinApp(
 
             /** Näyttö4 */
             composable(route = ProjectScreen.Screen4.name) {
+                val coloursList = viewModel.getColours().take(3)
+                val defaultColor = "hertta"
 
+                val colorsArray = arrayOf(
+                    if (coloursList.isNotEmpty()) coloursList[0] else defaultColor,
+                    if (coloursList.size >= 2) coloursList[1] else defaultColor,
+                    if (coloursList.size >= 3) coloursList[2] else defaultColor
+                    )
+
+                /**
+                val bcrColor = Color(0xFFfff23e)
                 val color1 = Color(0xFFfff23e)
+                val color2 = Color(0xFFfff23e)
+                val color3 = Color(0xFFfff23e)
+
+                val color1 = if (coloursList.isNotEmpty()) Color(android.graphics.Color.parseColor(coloursList[0])) else defaultColor
+                val color2 = if (coloursList.size >= 2) Color(android.graphics.Color.parseColor(coloursList[1])) else defaultColor
+                val color3 = if (coloursList.size >= 3) Color(android.graphics.Color.parseColor(coloursList[2])) else defaultColor
+                */
                 val logoPainter = painterResource(R.drawable.bug)
-                val color2 = Color(0xFFcca000)
-                val color3 = Color(0xFFff792e)
                 val text = "BUG\nBUDDY"
 
                 Column(
@@ -208,12 +223,12 @@ fun KotlinApp(
                     Box(
                         modifier =  Modifier
                             .fillMaxSize()
-                            .background(color = color1)
                     ) {
                         OrderSummaryScreen(
                             logo = logoPainter,
-                            logoColor = color2,
-                            textColor = color3,
+                            logoColor = colorsArray[1]!!,
+                            textColor = colorsArray[2]!!,
+                            bcrColor = colorsArray[0]!!,
                             text = text,
                             modifier = Modifier.fillMaxHeight()
                         )
@@ -221,12 +236,12 @@ fun KotlinApp(
                     Box(
                         modifier =  Modifier
                             .fillMaxSize()
-                            .background(color = color2)
                     ) {
                         OrderSummaryScreen(
                             logo = logoPainter,
-                            logoColor = color3,
-                            textColor = color1,
+                            logoColor = colorsArray[2]!!,
+                            textColor = colorsArray[0]!!,
+                            bcrColor = colorsArray[1]!!,
                             text = text,
                             modifier = Modifier.fillMaxHeight()
                         )
@@ -234,12 +249,12 @@ fun KotlinApp(
                     Box(
                         modifier =  Modifier
                             .fillMaxSize()
-                            .background(color = color3)
                     ) {
                         OrderSummaryScreen(
                             logo = logoPainter,
-                            logoColor = color1,
-                            textColor = color2,
+                            logoColor = colorsArray[0]!!,
+                            textColor = colorsArray[1]!!,
+                            bcrColor = colorsArray[2]!!,
                             text = text,
                             modifier = Modifier.fillMaxHeight()
                         )
