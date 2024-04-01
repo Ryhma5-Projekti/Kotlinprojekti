@@ -34,52 +34,6 @@ import com.example.cupcake.ui.components.FormattedPriceLabel
  * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
  * lambda
  */
-
-/**
- * @Composable
- * fun OrderSummaryScreen(
- *     logo: Painter,
- *     bcrColor: String,
- *     logoColor: String,
- *     text: String,
- *     textColor: String,
- *     modifier: Modifier = Modifier
- * ) {
- *     /**
- *     val colorHex = getColorHex(logoColor)
- *     */
- *     Box(
- *         modifier = modifier
- *             .fillMaxWidth()
- *             .padding(horizontal = 10.dp, vertical = 50.dp)
- *             .background(color = getColorHex(bcrColor))
- *     ) {
- *         Row(verticalAlignment = Alignment.CenterVertically) {
- *             Image(
- *                 painter = logo,
- *                 contentDescription = null,
- *                 modifier = Modifier
- *                     .size(80.dp)
- *                     .align(Alignment.CenterVertically)
- *                     .offset(x = 22.dp),
- *                 colorFilter = ColorFilter.tint(getColorHex(logoColor))
- *             )
- *             Spacer(modifier = Modifier.width(16.dp))
- *             Text(
- *                 text = text,
- *                 style = TextStyle(
- *                     fontSize = 36.sp,
- *                     color = getColorHex(textColor),
- *                     fontWeight = FontWeight.Bold,
- *                 ),
- *                 textAlign = TextAlign.Center,
- *                 modifier = Modifier.weight(1f)
- *             )
- *         }
- *     }
- * }
- */
-
 @Composable
 fun LogoPalette(
     modifier: Modifier = Modifier,
@@ -231,18 +185,3 @@ private fun <T> List<T>.convertToColors(): List<Color> {
 private fun getColorHex(colorName: String): Color {
     return ColorLibrary.colors[colorName] ?: Color.Black // Return black if color not found
 }
-
-/**
-@Preview
-@Composable
-fun OrderSummaryPreview() {
-    CupcakeTheme {
-        OrderSummaryScreen(
-            orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
-            onSendButtonClicked = { subject: String, summary: String -> },
-            onCancelButtonClicked = {},
-            modifier = Modifier.fillMaxHeight()
-        )
-    }
-}
-*/

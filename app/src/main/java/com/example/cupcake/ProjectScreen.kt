@@ -3,9 +3,6 @@ package com.example.cupcake
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,9 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -79,9 +74,6 @@ fun AppBar(
         }
     )
 }
-
-
-
 
 @Composable
 fun KotlinApp(
@@ -178,92 +170,6 @@ fun KotlinApp(
 
                 )
             }
-
-            /** Näyttö 3 (toimii aikalailla samalla tavalla kuin näyttö 2)
-            composable(route = ProjectScreen.Screen3.name) {
-                SelectOptionScreen(         /** SelectOptionScreen.kt */
-                    subtotal = uiState.price,      /** hakee loppusumman (OrderUiState.kt) ja asettaa sen muuttujaan */
-                    onNextButtonClicked = { navController.navigate(ProjectScreen.Screen4.name) },
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
-                    /** hakee pvm vaihtoehdot (OrderUiState.kt) ja asettaa ne vaihtoehtojen listaan (OrderViewModel.kt)*/
-                    options = uiState.pickupOptions,
-                    onSelectionChanged = { viewModel.setDate(it) },
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }*/
-
-            /** Näyttö4 */
-//            composable(route = ProjectScreen.Screen4.name) {
-//                val coloursList = viewModel.getColours().take(3)
-//                val defaultColor = "hertta"
-//
-//                val colorsArray = arrayOf(
-//                    if (coloursList.isNotEmpty()) coloursList[0] else defaultColor,
-//                    if (coloursList.size >= 2) coloursList[1] else defaultColor,
-//                    if (coloursList.size >= 3) coloursList[2] else defaultColor
-//                    )
-//
-//                /**
-//                val bcrColor = Color(0xFFfff23e)
-//                val color1 = Color(0xFFfff23e)
-//                val color2 = Color(0xFFfff23e)
-//                val color3 = Color(0xFFfff23e)
-//
-//                val color1 = if (coloursList.isNotEmpty()) Color(android.graphics.Color.parseColor(coloursList[0])) else defaultColor
-//                val color2 = if (coloursList.size >= 2) Color(android.graphics.Color.parseColor(coloursList[1])) else defaultColor
-//                val color3 = if (coloursList.size >= 3) Color(android.graphics.Color.parseColor(coloursList[2])) else defaultColor
-//                */
-//                val logoPainter = painterResource(R.drawable.bug)
-//                val text = "BUG\nBUDDY"
-//
-//                Column(
-//                    modifier = Modifier.fillMaxSize(),
-//                    verticalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//                    Box(
-//                        modifier =  Modifier
-//                            .fillMaxSize()
-//                    ) {
-//                        OrderSummaryScreen(
-//                            logo = logoPainter,
-//                            logoColor = colorsArray[1]!!,
-//                            textColor = colorsArray[2]!!,
-//                            bcrColor = colorsArray[0]!!,
-//                            text = text,
-//                            modifier = Modifier.fillMaxHeight()
-//                        )
-//                    }
-//                    Box(
-//                        modifier =  Modifier
-//                            .fillMaxSize()
-//                    ) {
-//                        OrderSummaryScreen(
-//                            logo = logoPainter,
-//                            logoColor = colorsArray[2]!!,
-//                            textColor = colorsArray[0]!!,
-//                            bcrColor = colorsArray[1]!!,
-//                            text = text,
-//                            modifier = Modifier.fillMaxHeight()
-//                        )
-//                    }
-//                    Box(
-//                        modifier =  Modifier
-//                            .fillMaxSize()
-//                    ) {
-//                        OrderSummaryScreen(
-//                            logo = logoPainter,
-//                            logoColor = colorsArray[0]!!,
-//                            textColor = colorsArray[1]!!,
-//                            bcrColor = colorsArray[2]!!,
-//                            text = text,
-//                            modifier = Modifier.fillMaxHeight()
-//                        )
-//                    }
-//
-//                }
-//            }
 
             composable(route = ProjectScreen.Screen4.name) {
 
