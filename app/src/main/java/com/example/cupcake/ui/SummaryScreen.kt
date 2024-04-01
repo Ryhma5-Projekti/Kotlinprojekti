@@ -104,9 +104,6 @@ fun OrderSummaryScreen(
         Pair(stringResource(R.string.colour2), orderUiState.colours)        /** Yhteenveto rivi 3: näyttää toisen valitun värin */
     )
 
-    val logoPainter = painterResource(R.drawable.bug)
-    val logoText = "BUG\nBUDDY"
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
@@ -120,10 +117,7 @@ fun OrderSummaryScreen(
                 if (item.second is String) {
                     Text(text = item.second as String, fontWeight = FontWeight.Bold)
                 } else if (item.second is List<*>) {
-                    for (permutation in (item.second as List<*>).convertToColors().permutations()) {
-                        LogoPalette(logo = logoPainter, text = logoText,
-                            bgColor = permutation[0], logoColor = permutation[1], textColor = permutation[2])
-                    }
+                    LogoPalettes(item)
                 }
                 Divider(thickness = dimensionResource(R.dimen.thickness_divider))       /** Luo erotusviivan käyttäen määriteltyä paksuutta resurssista. */
             }
@@ -159,6 +153,19 @@ fun OrderSummaryScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun LogoPalettes(item: Pair<String, Any>) {
+    val logoPainter = painterResource(R.drawable.bug)
+    val logoText = "BUG\nBUDDY"
+
+    for (permutation in (item.second as List<*>).convertToColors().permutations()) {
+        LogoPalette(
+            logo = logoPainter, text = logoText,
+            bgColor = permutation[0], logoColor = permutation[1], textColor = permutation[2]
+        )
     }
 }
 
