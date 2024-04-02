@@ -10,14 +10,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cupcake.data.ColorLibrary
+import com.example.cupcake.data.OrderUiState
+import com.example.cupcake.R
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
@@ -25,22 +34,19 @@ import com.example.cupcake.data.ColorLibrary
  * lambda
  */
 @Composable
-fun OrderSummaryScreen(
+fun LogoPalette(
+    modifier: Modifier = Modifier,
     logo: Painter,
-    bcrColor: String,
-    logoColor: String,
     text: String,
-    textColor: String,
-    modifier: Modifier = Modifier
+    bgColor: Color,
+    logoColor: Color,
+    textColor: Color,
 ) {
-    /**
-    val colorHex = getColorHex(logoColor)
-    */
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 50.dp)
-            .background(color = getColorHex(bcrColor))
+            .background(color = bgColor)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
@@ -50,38 +56,28 @@ fun OrderSummaryScreen(
                     .size(80.dp)
                     .align(Alignment.CenterVertically)
                     .offset(x = 22.dp),
-                colorFilter = ColorFilter.tint(getColorHex(logoColor))
+                colorFilter = ColorFilter.tint(logoColor)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = text,
                 style = TextStyle(
                     fontSize = 36.sp,
-                    color = getColorHex(textColor),
+                    color = textColor,
                     fontWeight = FontWeight.Bold,
                 ),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f)
             )
         }
-
     }
 }
 
-private fun getColorHex(colorName: String): Color {
-    return ColorLibrary.colors[colorName] ?: Color.Black // Return black if color not found
-}
-
-
-
-
-
-/**
 @Composable
 fun OrderSummaryScreen(
     orderUiState: OrderUiState,
-    onCancelButtonClicked: () -> Unit,   /** Palaa alkuun */
-    onSendButtonClicked: (String, String) -> Unit,      /** Palaa alkuun */
+    onCancelButtonClicked: () -> Unit,/** Palaa alkuun */
+    onSendButtonClicked: (String, String) -> Unit,/** Palaa alkuun */
     modifier: Modifier = Modifier
 ) {
     val resources = LocalContext.current.resources
@@ -102,30 +98,10 @@ fun OrderSummaryScreen(
     val newOrder = stringResource(R.string.new_cupcake_order)
 
     val items = listOf(                 /** Luodaan tilauksen yhteenvetojen lista näyttämistä varten */
-        Pair(stringResource(R.string.quantity), numberOfCupcakes),      /** Yhteenveto rivi 1: näyttää valitun määrän */
+        // Pair(stringResource(R.string.quantity), numberOfCupcakes),      /** Yhteenveto rivi 1: näyttää valitun määrän */
         Pair(stringResource(R.string.colour), orderUiState.colour),     /** Yhteenveto rivi 2: näyttää valitun värin */
         Pair(stringResource(R.string.colour2), orderUiState.colours)        /** Yhteenveto rivi 3: näyttää toisen valitun värin */
     )
-
-    fun <T> List<T>.permutations(): List<List<T>> {
-        val result = mutableListOf<List<T>>()
-        for (outer in indices) {
-            val temp = mutableListOf<T>()
-            for (inner in indices) {
-                temp.add(this[(outer + inner) % size])
-            }
-            result.add(temp)
-        }
-        return result
-    }
-
-    fun <T> List<T>.convertToColors(): List<Color> {
-        val result = mutableListOf<Color?>()
-        for (item in this) {
-            result.add(ColorLibrary.colors[item as String])
-        }
-        return result.toList().filterNotNull()
-    }
 
     Column(
         modifier = modifier,
@@ -140,13 +116,7 @@ fun OrderSummaryScreen(
                 if (item.second is String) {
                     Text(text = item.second as String, fontWeight = FontWeight.Bold)
                 } else if (item.second is List<*>) {
-                    Text(
-                        text = (item.second as List<*>)
-                            .convertToColors()
-                            .permutations()
-                            .joinToString("\n\n"),
-                        fontWeight = FontWeight.Bold
-                    )
+                    LogoPalettes(item)
                 }
                 Divider(thickness = dimensionResource(R.dimen.thickness_divider))       /** Luo erotusviivan käyttäen määriteltyä paksuutta resurssista. */
             }
@@ -154,10 +124,10 @@ fun OrderSummaryScreen(
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
             /** komponentti, joka näyttää hinnan muotoillusti. */
             /** Tässä annetaan tilausrivin hinta ja lisätään sille muokkain, joka kohdistetaan oikeaan reunaan. */
-            FormattedPriceLabel(
-                subtotal = orderUiState.price,
-                modifier = Modifier.align(Alignment.End)
-            )
+//            FormattedPriceLabel(
+//                subtotal = orderUiState.price,
+//                modifier = Modifier.align(Alignment.End)
+//            )
         }
         Row(
             modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
@@ -184,18 +154,40 @@ fun OrderSummaryScreen(
         }
     }
 }
-*/
-/**
-@Preview
+
 @Composable
-fun OrderSummaryPreview() {
-    CupcakeTheme {
-        OrderSummaryScreen(
-            orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
-            onSendButtonClicked = { subject: String, summary: String -> },
-            onCancelButtonClicked = {},
-            modifier = Modifier.fillMaxHeight()
+private fun LogoPalettes(item: Pair<String, Any>) {
+    val logoPainter = painterResource(R.drawable.bug)
+    val logoText = "BUG\nBUDDY"
+
+    for (permutation in (item.second as List<*>).convertToColors().permutations()) {
+        LogoPalette(
+            logo = logoPainter, text = logoText,
+            bgColor = permutation[0], logoColor = permutation[1], textColor = permutation[2]
         )
     }
 }
-*/
+
+private fun <T> List<T>.permutations(): List<List<T>> {
+    val result = mutableListOf<List<T>>()
+    for (outer in indices) {
+        val temp = mutableListOf<T>()
+        for (inner in indices) {
+            temp.add(this[(outer + inner) % size])
+        }
+        result.add(temp)
+    }
+    return result
+}
+
+private fun <T> List<T>.convertToColors(): List<Color> {
+    val result = mutableListOf<Color?>()
+    for (item in this) {
+        result.add(getColorHex(item as String))
+    }
+    return result.toList().filterNotNull()
+}
+
+private fun getColorHex(colorName: String): Color {
+    return ColorLibrary.colors[colorName] ?: Color.Black // Return black if color not found
+}
